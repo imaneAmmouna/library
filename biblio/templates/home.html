@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <title>Home</title>
+    {% load static %}
+
+    <style>
+        body{
+            background-color: #f0dcbc;
+        }
+        main {
+            font-family: Arial, sans-serif;
+            margin: 10px;
+            padding: 10px;
+        }
+        footer{
+            border-top: 1px solid #722410; 
+            padding-top: 10px; 
+        }
+        header {
+            border-bottom: 1px solid #722410; 
+            padding-bottom: 10px; 
+        }
+
+        /*sections*/
+        .section{
+            color: #722410;
+            text-decoration: underline;
+        }
+
+        /*les cards*/
+        .slider-container {
+        width: 100%;
+        margin: 0 auto;
+        overflow: hidden;
+        position: relative;
+        }
+        
+        .card-slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .card {
+            background-color: #f0dcbc;
+            flex: 0 0 250px;
+            border-radius: 9px;
+            overflow: hidden;
+            display: flex; /* Utiliser Flexbox */
+            flex-direction: column; /* Mettre les éléments en colonne */
+            justify-content: center; /* Centrer verticalement */
+            align-items: center; /* Centrer horizontalement */
+            margin: 5px;
+        }
+        .card img {
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+        .card-content {
+            padding: 0px;
+            text-align: center;
+            position: relative;
+        }
+        .card-content h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+        .card-content p {
+            margin-top: 0px;
+            font-size: 14px;
+        }
+
+        /*buttons previous next*/
+        .prev, .next{
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border: none;
+            background-color: #722410;
+            color: white;
+            font-size: 25px;
+            cursor: pointer;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .prev {
+            left: 10px;
+        }
+        .next {
+            right: 10px;
+        }
+        
+        /*header*/
+        header{
+            position: relative;
+            width: 100%;
+            height: 70%;
+            background: #f0dcbc;
+            color: rgb(236, 191, 132);/*icones*/
+            display: flex;
+            justify-content: space-between;
+        } 
+        .navbar{
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .searchBox {
+            position: relative;
+        }
+        .searchBox input {
+            width: 120%;
+            height:40%;
+            padding: 1%;
+            text-indent: 10px;
+            font-size: 18px;
+            color: #181818;
+            border-color: #722410;
+        }
+        #searchIcon {
+            position: absolute;
+            top: 50%;
+            font-size: 21px;
+            color: #722410;
+            z-index: 221;
+            cursor: pointer;
+            transform: translateY(-50%);
+            right: -90px;
+        }
+        .menu{
+            margin-left: 100px;
+        }
+        .menu li {
+            display: inline-block; 
+            margin-left: 25px;
+            transition: all 0.5s ease;
+        }
+        .menu li a {
+            color: #722410;
+            text-decoration:none ;
+            font-size: 18px;
+        }
+        
+
+        /*button cards*/
+        .card-button {
+            position: absolute;
+            bottom: 10px;
+            transform: translateX(-50%);
+            padding: 5px 90px;
+            width: 70px;
+            text-transform: capitalize;
+            border: none;
+            outline: none;
+            background:rgb(236, 191, 132);
+            border-radius: 5px;
+            transition: 0.5s;
+            cursor: pointer;
+            opacity: 0;
+            white-space: nowrap;
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            font-weight: bold;
+            color: #722410;
+            text-decoration: none;
+        }
+        .card:hover .card-button {
+            opacity: 1;
+        }
+        .card-button:hover { 
+            background:#722410;
+            color: rgb(236, 191, 132);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <!-- logo -->
+        <div class="acceuilLogo">
+            <img class="logo"  src="{% static 'image_logo/logo.png' %}" />
+        </div>
+        <div class="navbar"> 
+            <!-- barre de recherche -->
+            <div class="searchBox">
+                <form action="{% url 'search' %}" method="GET">
+                    <input type="text" name="query" placeholder="search here ...." />
+                    <button type="submit" id="searchIcon"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+                <ul class="menu">
+                    <li ><i class="fa fa-home"></i>
+                        <a href="{% url 'home' %}"><b>Home</b></a></li>
+                    <li ><i class="fa fa-user-circle"></i>
+                        <a href="{% url 'profile' %}"><b> Profile</b></a></li>
+                    <li ><i class="fas fa-solid fa-cart-shopping"></i>
+                        <a href="{% url 'cart' %}"><b>Cart</b></a></li>
+                    <li ><i class="fa fa-question-circle"></i>
+                        <a href="{% url 'help' %}"><b>Help</b></a></li>
+                    <li ><i class="fas fa-sharp fa-solid fa-bell"></i>
+                        <a href="{% url 'notifications' %}"><b>Notifications</b></a></li>
+                    <li ><i class="fas fa-sign-out"></i>
+                        <a href="{% url 'logout' %}"><b>Signout</b></a></li>
+                </ul>        
+        </div>
+    </header>
+
+    <main>
+        {% for categorie, livres in livres_par_categorie.items %}
+        <!-- Catégorie -->
+        <div class="slider-container" id="{{ categorie.nom_categorie }}">
+            <a href="{% url 'livres_par_categorie' categorie_id=categorie.categorie_id %}"><h3 class="section">{{ categorie.nom_categorie }}</h3></a>
+            <button class="prev prev-{{ categorie.nom_categorie|lower }}">❮</button>
+            <button class="next next-{{ categorie.nom_categorie|lower }}">❯</button>
+            <div class="card-slider">
+                {% for livre in livres %}
+                <!-- Livre -->
+                <div class="card">
+                    <a href="{% url 'livre_detail' livre_id=livre.livre_id %}"><img src="{% static livre.couverture.url %}" alt="{{ livre.titre }}"></a>
+                    <div class="card-content">
+                        <button class="card-button" value="{{livre.livre_id}}">add to cart</button>
+                    </div>
+                    <div><p style="text-align: center; color: #72241075;"><b>{{ livre.titre }}</b></p></div>
+                </div>
+                <!-- Fin du livre -->
+                {% endfor %}
+            </div>
+        </div>
+        <!-- Fin de la catégorie -->
+        {% endfor %}
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="col-md-4">
+                <h4>Nous contacter</h4>
+                <p>contact@votreentreprise.com</p>
+                <p>+33 123 456 789</p>
+            </div>
+        </div>
+    </footer>
+
+    <!--java script-->
+    <script>
+
+    /*le script*/
+    document.addEventListener('DOMContentLoaded', function () {
+    const prevButtons = document.querySelectorAll('.prev');
+    const nextButtons = document.querySelectorAll('.next');
+    const sliders = document.querySelectorAll('.card-slider');
+    const cardWidth = document.querySelector('.card').offsetWidth;
+    let scrollAmount = 0;
+
+    prevButtons.forEach(function(prevButton) {
+        prevButton.addEventListener('click', function () {
+            const slider = this.parentElement.querySelector('.card-slider');
+            if (scrollAmount > 0) {
+                scrollAmount -= cardWidth + 20; // Ajoutez l'espacement entre les cartes
+                slider.style.transform = `translateX(-${scrollAmount}px)`;
+            }
+        });
+    });
+
+    nextButtons.forEach(function(nextButton) {
+        nextButton.addEventListener('click', function () {
+            const slider = this.parentElement.querySelector('.card-slider');
+            if (scrollAmount < slider.scrollWidth - slider.offsetWidth) {
+                scrollAmount += cardWidth + 20; // Ajoutez l'espacement entre les cartes
+                slider.style.transform = `translateX(-${scrollAmount}px)`;
+            }
+        });
+    });
+
+    const buttons = document.querySelectorAll('.card-button');
+    buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                const livreId = this.value;
+                addToCart(livreId);
+            });
+        });
+});
+
+function addToCart(livre_id) {
+        const client_id = "{{ user.id }}"; // Récupérer l'ID du client connecté
+        fetch(`/add-to-cart/${livre_id}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({livre_id: livre_id, client_id: client_id})
+        })
+        .then(response => {
+            if (response.ok) {
+                // Rediriger vers la page du panier
+                window.location.href = "/cart/";
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+</body>
+</html>
+ 

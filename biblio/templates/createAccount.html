@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <title>Sign Up</title>
+    {% load static %}
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(236, 191, 132);
+        }
+        
+        .login-container {
+            width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #722410;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group input, .input-group select {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #722410;
+            border-radius: 5px;
+            background-color: #f0dcbc;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #722410;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .fas {
+            color: #722410;
+        }
+        .signup{
+            text-align: center;
+        }
+        .signup a{
+            color: #722410; 
+            text-decoration: none; 
+            font-weight: bold;   
+            margin-left: 20px;          
+        }
+        .signup a:hover{
+            text-decoration: underline; 
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img class="logo" src="{% static 'image_logo/logo.png' %}">
+    </header>
+    <main>
+        <div class="login-container">
+            <h2 style="color: #722410;">Sign Up</h2>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <form method="POST" action="{% url 'createAccount' %}">
+                {% csrf_token %}
+                <div class="input-group">
+                    <i class="fas fa-solid fa-address-card"></i>
+                    <input type="text" placeholder="Name" required name="nom">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-solid fa-address-card"></i>
+                    <input type="text" placeholder="Last Name" required name="prenom">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Username" required name="username">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" placeholder="Email" required name="email">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-solid fa-cake-candles"></i>
+                    <input type="date" placeholder="Date of birth" required name="date_de_naissance">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-venus-mars"></i>
+                    <select name="genre" required>
+                        <option value="__">___</option>
+                        <option value="M">Male</option>
+                        <option value="F">Femelle</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Password" required name="password">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Confirm Password" required name="password2">
+                </div>               
+                <button type="submit" class="login-button"><b>Sign Up</b></button>
+            </form>
+        </div>
+        <div class="signup">
+            <p>You alreadu have an account?<a href="{% url 'login' %}">Login</a></p> 
+        </div>
+    </main>
+
+    <script>
+        function validateForm() {
+            var password = document.getElementsByName("password")[0].value;
+            var confirmPassword = document.getElementsByName("password2")[0].value;
+            
+            if (password !== confirmPassword) {
+                alert("Le champ de confirmation de mot de passe ne correspond pas au champ de mot de passe.");
+                return false; // Empêcher l'envoi du formulaire
+            }
+            return true; // Soumettre le formulaire si les mots de passe correspondent
+        }
+    </script>
+</body>
+</html>

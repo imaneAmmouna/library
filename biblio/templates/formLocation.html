@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Rental Form</title>
+    {% load static %}
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0dcbc;
+        }
+        
+        .rental-container {
+            width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #722410;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group input, .input-group select {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #722410;
+            border-radius: 5px;
+            background-color: #f0dcbc;
+        }
+
+        .submit-button {
+            width: 90%;
+            padding: 10px;
+            border: none;
+            background-color: #722410;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+      
+       
+    </style>
+</head>
+<body>
+    <header>
+        <img class="logo" src="{% static 'image_logo/logo.png' %}">
+    </header>
+    <main>
+        <div class="rental-container">
+            <h2 style="color: #722410;">Book Rental Form</h2>
+            <form method="POST" action="{% url 'submit_location' %}">
+                {% csrf_token %}
+               
+                <div class="input-group">
+                    <input type="text" placeholder="Your ID" required name="client" value="{{ client.client_id }}" readonly>
+                </div>
+                
+                <div class="input-group">
+                    <input type="text" placeholder="Your Name" required value="{{ client.nom }}" readonly>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" placeholder="Book ID" required name="livre" value="{{ livre.livre_id }}" readonly>
+                </div>
+                
+                <div class="input-group">
+                    <input type="text" placeholder="Book Title" required value="{{ livre.titre }}" readonly>
+                </div>    
+                
+                <div class="input-group">
+                    <input type="date" placeholder="Date of Location" required name="date_location">
+                </div>      
+                
+                <div class="input-group">
+                    <input type="date" placeholder="Date of Return" required name="date_retour">
+                </div>  
+                <div class="input-group">
+                    <input type="text" placeholder="Price" required name="prix_location" value="{{ livre.prix_locations }}">
+                </div>          
+                <button type="submit" class="submit-button"><b>Submit</b></button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

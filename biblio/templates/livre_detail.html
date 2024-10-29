@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ livre.titre }}</title>
+    {% load static %}
+
+    <style>
+        body{
+            background-color: #f0dcbc;
+        }
+       
+        h1{
+            color: #722410;
+            text-align: center;
+        }
+        h3{
+            color: #722410;
+            text-decoration: underline;
+        }
+
+        header {
+            border-bottom: 1px solid #722410; 
+            padding-bottom: 10px; 
+        }
+
+        button{
+            width: 50%;
+            padding: 10px;
+            border: none;
+            background-color: #722410;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img class="logo" src="{% static 'image_logo/logo.png' %}">
+    </header>
+    <main>
+    <h1>{{ livre.titre }}</h1>
+    <img src="{% static livre.couverture.url %}" alt="{{ livre.titre }}">
+    <p><h3>Description :</h3> {{ livre.description }}</p>
+    <p><h3>Auteur :</h3> {{ livre.auteur.nom_auteur }}</p>
+    <p><h3>Prix :</h3> {{ livre.prix_locations }}</p>
+    <p><h3>Nombre de livres disponibles :</h3> {{ livre.nombre_livres }}</p>
+    <h3>Catégories :</h3>
+    <ul>
+        {% for categorie in livre.categorie.all %}
+            <li>{{ categorie.nom_categorie }}</li>
+        {% endfor %}
+    </ul>
+    <button onclick="redirectToFormLocation()">Rent this book</button>
+</main>
+
+<script>
+    function redirectToFormLocation() {
+    var livreId = '{{ livre.livre_id }}';
+    var clientId = '{{ client_id }}';
+    window.location.href = "{% url 'formLocation' %}?livre_id=" + livreId + "&client_id=" + clientId;
+}
+
+</script>
+</body>
+</html>
